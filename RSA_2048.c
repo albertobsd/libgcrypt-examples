@@ -28,22 +28,19 @@ int main()	{
 		fprintf(stderr,"gcrypt: failed initialization");
 		exit(0);
 	}
-	
-	length = gcry_sexp_sprint(rsa_keypair,GCRYSEXP_FMT_CANON,NULL,length);
+	length = gcry_sexp_sprint(rsa_parms,GCRYSEXP_FMT_CANON,NULL,0);
 	buffer = calloc(length,sizeof( char));
-	offset = gcry_sexp_sprint(rsa_parms,GCRYSEXP_FMT_DEFAULT,buffer,length);
-
+	offset = gcry_sexp_sprint(rsa_parms,GCRYSEXP_FMT_CANON,buffer,length);
 	printf("Buffer size %i\n",length);
 	printf("Buffer offset %i\n",offset);
 	printf("%s\n",buffer);
 	memset(buffer,0,length);
-
 	err = gcry_pk_genkey(&rsa_keypair, rsa_parms);
 	if (err) {
 		fprintf(stderr,"gcrypt: failed initialization");
 		exit(0);
 	}
-	length = gcry_sexp_sprint(rsa_keypair,GCRYSEXP_FMT_CANON,NULL,length);
+	length = gcry_sexp_sprint(rsa_keypair,GCRYSEXP_FMT_CANON,NULL,0);
 	buffer = realloc(buffer,length*sizeof(char));
 	offset = gcry_sexp_sprint(rsa_keypair,GCRYSEXP_FMT_CANON,buffer,length);
 
